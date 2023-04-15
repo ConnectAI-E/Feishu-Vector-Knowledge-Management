@@ -2,7 +2,7 @@ package openai
 
 import (
 	"fmt"
-	"lark-vkm/pkg/initialization"
+	"lark-vkm/internal/initialization"
 	"testing"
 )
 

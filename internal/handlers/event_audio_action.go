@@ -3,7 +3,7 @@ package handlers
 import (
 	"context"
 	"fmt"
-	"lark-vkm/pkg/initialization"
+	"lark-vkm/internal/initialization"
 	"lark-vkm/pkg/utils/audio"
 	"os"
 

@@ -2,7 +2,7 @@ package services
 
 import (
 	"encoding/json"
-	"lark-vkm/pkg/services/openai"
+	"lark-vkm/pkg/openai"
 	"time"
 
 	"github.com/patrickmn/go-cache"

@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
-	"lark-vkm/pkg/handlers"
-	"lark-vkm/pkg/initialization"
-	"lark-vkm/pkg/services/openai"
+	"lark-vkm/internal/handlers"
+	"lark-vkm/internal/initialization"
+	"lark-vkm/pkg/openai"
 	"log"
 
 	"github.com/gin-gonic/gin"

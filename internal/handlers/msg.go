@@ -5,9 +5,9 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"lark-vkm/pkg/initialization"
+	"lark-vkm/internal/initialization"
+	"lark-vkm/pkg/openai"
 	"lark-vkm/pkg/services"
-	"lark-vkm/pkg/services/openai"
 
 	"github.com/google/uuid"
 	larkcard "github.com/larksuite/oapi-sdk-go/v3/card"

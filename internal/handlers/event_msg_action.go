@@ -2,7 +2,7 @@ package handlers
 
 import (
 	"fmt"
-	"lark-vkm/pkg/services/openai"
+	"lark-vkm/pkg/openai"
 )
 
 type MessageAction struct { /*消息*/

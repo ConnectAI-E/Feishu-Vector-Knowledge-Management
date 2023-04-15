@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"context"
-	"lark-vkm/pkg/initialization"
-	"lark-vkm/pkg/services/openai"
+	"lark-vkm/internal/initialization"
+	"lark-vkm/pkg/openai"
 
 	larkcard "github.com/larksuite/oapi-sdk-go/v3/card"
 	larkim "github.com/larksuite/oapi-sdk-go/v3/service/im/v1"

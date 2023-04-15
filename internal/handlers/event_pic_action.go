@@ -3,9 +3,9 @@ package handlers
 import (
 	"context"
 	"fmt"
-	"lark-vkm/pkg/initialization"
+	"lark-vkm/internal/initialization"
+	"lark-vkm/pkg/openai"
 	"lark-vkm/pkg/services"
-	"lark-vkm/pkg/services/openai"
 	"lark-vkm/pkg/utils"
 	"os"
 

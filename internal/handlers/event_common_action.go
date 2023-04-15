@@ -3,8 +3,8 @@ package handlers
 import (
 	"context"
 	"fmt"
-	"lark-vkm/pkg/initialization"
-	"lark-vkm/pkg/services/openai"
+	"lark-vkm/internal/initialization"
+	"lark-vkm/pkg/openai"
 	"lark-vkm/pkg/utils"
 
 	larkim "github.com/larksuite/oapi-sdk-go/v3/service/im/v1"
