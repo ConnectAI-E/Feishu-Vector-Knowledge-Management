@@ -81,7 +81,7 @@ func (q Qdrant) CreatePoints(collectionName string, pointRequest PointRequest) (
 
 }
 
-func (q Qdrant) SearchPoints(collectionName string, pointSearchRequest PointSearchRequest) (res []SearchResult, err error) {
+func (q Qdrant) SearchPoints(pointSearchRequest PointSearchRequest) (res []SearchResult, err error) {
 	response := &CommonResponse{}
 	var reqBytes []byte
 	reqBytes, err = json.Marshal(pointSearchRequest)
@@ -90,7 +90,7 @@ func (q Qdrant) SearchPoints(collectionName string, pointSearchRequest PointSear
 		return
 	}
 
-	body, err := q.Send(http.MethodPost, collectionApi+"/"+collectionName+pointsApi+searchApi, reqBytes)
+	body, err := q.Send(http.MethodPost, collectionApi+"/"+q.CollectionName+pointsApi+searchApi, reqBytes)
 	if err != nil {
 		log.Println(err)
 		return

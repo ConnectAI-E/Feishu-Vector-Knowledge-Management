@@ -18,13 +18,14 @@ type CardKind string
 type CardChatType string
 
 const (
-	ClearCardKind      CardKind = "clear"            // 清空上下文
-	PicModeChangeKind  CardKind = "pic_mode_change"  // 切换图片创作模式
-	PicResolutionKind  CardKind = "pic_resolution"   // 图片分辨率调整
-	PicTextMoreKind    CardKind = "pic_text_more"    // 重新根据文本生成图片
-	PicVarMoreKind     CardKind = "pic_var_more"     // 变量图片
-	RoleTagsChooseKind CardKind = "role_tags_choose" // 内置角色所属标签选择
-	RoleChooseKind     CardKind = "role_choose"      // 内置角色选择
+	ClearCardKind          CardKind = "clear"                // 清空上下文
+	PicModeChangeKind      CardKind = "pic_mode_change"      // 切换图片创作模式
+	PicResolutionKind      CardKind = "pic_resolution"       // 图片分辨率调整
+	PicTextMoreKind        CardKind = "pic_text_more"        // 重新根据文本生成图片
+	PicVarMoreKind         CardKind = "pic_var_more"         // 变量图片
+	RoleTagsChooseKind     CardKind = "role_tags_choose"     // 内置角色所属标签选择
+	RoleChooseKind         CardKind = "role_choose"          // 内置角色选择
+	VkmOperationChooseKind CardKind = "vkm_operation_choose" // 知识库操作选择
 )
 
 const (
@@ -658,6 +659,10 @@ func sendHelpCard(ctx context.Context,
 		withMainMd("📤 **话题内容导出** 🚧\n"+" 文本回复 *导出* 或 */export*"),
 		withSplitLine(),
 		withMainMd("🎰 **连续对话与多话题模式**\n"+" 点击对话框参与回复，可保持话题连贯。同时，单独提问即可开启全新新话题"),
+		withSplitLine(),
+		withMainMd("🎰 **知识库查询**\n"+" 文本回复 *知识库* 或 */faq*+空格+问题"),
+		withSplitLine(),
+		withMainMd("🎰 **知识库管理**\n"+" 文本回复 *知识库管理* 或 */faqmgr*"),
 		withSplitLine(),
 		withMainMd("🎒 **需要更多帮助**\n文本回复 *帮助* 或 */help*"),
 	)

@@ -18,7 +18,6 @@ import (
 var cmd = &cobra.Command{
 	Use:   "server",
 	Short: "run lark webhook server",
-	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		cfg, err := cmd.Flags().GetString("config")
 		if err != nil {

@@ -1,0 +1,45 @@
+version: '2'
+
+services:
+  qdrant:
+    image: docker.io/qdrant/qdrant:v1.1.1
+    ports:
+      - '6333:6333'
+      - '6334:6334'
+    volumes:
+      - './data/qdrant:/qdrant/storage'
+
+  lark-vkm:
+    depends_on:
+      - 'qdrant'
+    container_name: lark-vkm
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "9000:9000/tcp"
+    # volumes:
+    #   - ./code/config.yaml:/app/config.yaml:ro
+    environment:
+      - APP_ID=cli_axxx
+      - APP_SECRET=xxx
+      - APP_ENCRYPT_KEY=xxx
+      - APP_VERIFICATION_TOKEN=xxx
+      # 请确保和飞书应用管理平台中的设置一致
+      - BOT_NAME=chatGpt
+      # OpenAI API Key 支持负载均衡, 可以填写多个 Key 用逗号分隔
+      - OPENAI_KEY=sk-xxx,sk-xxx,sk-xxx
+      # 服务器配置
+      - HTTP_PORT=9000
+      - HTTPS_PORT=9001
+      - USE_HTTPS=false
+      - CERT_FILE=cert.pem
+      - KEY_FILE=key.pem
+      # OpenAI 地址, 一般不需要修改, 除非你有自己的反向代理
+      - API_URL=https://api.openai.com
+      # 代理设置, 例如 - HTTP_PROXY=http://127.0.0.1:7890, 默认代表不使用代理
+      - HTTP_PROXY
+      # 向量数据地址
+      - QDRANT_HOST=http://qdrant:6333
+      # 向量数据库名
+      - QDRANT_COLLECTION=lark-vkm
