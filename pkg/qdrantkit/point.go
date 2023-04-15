@@ -58,21 +58,23 @@ func (q Qdrant) CreatePoints(collectionName string, pointRequest PointRequest) (
 	var reqBytes []byte
 	reqBytes, err = json.Marshal(pointRequest)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println(err)
 		return
 	}
 
 	body, err := q.Send(http.MethodPut, collectionApi+"/"+collectionName+pointsApi+"?wait=true", reqBytes)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println(err)
 		return
 	}
 
 	err = json.Unmarshal(body, &response)
 	if err != nil {
+		log.Println(err)
 		return
 	}
 	if response.Result == nil {
+		log.Println(response.Status)
 		return errors.New(response.Status.(map[string]interface{})["error"].(string))
 	}
 	return
@@ -84,19 +86,19 @@ func (q Qdrant) SearchPoints(collectionName string, pointSearchRequest PointSear
 	var reqBytes []byte
 	reqBytes, err = json.Marshal(pointSearchRequest)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println(err)
 		return
 	}
 
 	body, err := q.Send(http.MethodPost, collectionApi+"/"+collectionName+pointsApi+searchApi, reqBytes)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println(err)
 		return
 	}
 
 	err = json.Unmarshal(body, &response)
 	if err != nil {
-		log.Println(err.Error())
+		log.Println(err)
 		return
 	}
 	if response.Result == nil {
@@ -107,7 +109,7 @@ func (q Qdrant) SearchPoints(collectionName string, pointSearchRequest PointSear
 		sr := SearchResult{}
 		err = mapstructure.Decode(v, &sr)
 		if err != nil {
-			log.Println(err.Error())
+			log.Println(err)
 			return
 		}
 		res = append(res, sr)
