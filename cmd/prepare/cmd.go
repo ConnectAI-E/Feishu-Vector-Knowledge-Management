@@ -19,18 +19,22 @@ var cmd = &cobra.Command{
 	Short: "Prepare vector data",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		cmd.Help()
+		err := cmd.Help()
+		if err != nil {
+			return
+		}
 	},
 }
 
 func init() {
 	cmdCsv.Flags().StringP("file", "f", "./data.csv", "csv file path.")
-
+	cmdSplit.Flags().StringP("file", "f", "./data.txt",
+		"text file path.")
 	cmd.AddCommand(cmdCsv)
+	cmd.AddCommand(cmdSplit)
 }
 
 func Register(rootCmd *cobra.Command) error {
 	rootCmd.AddCommand(cmd)
-
 	return nil
 }

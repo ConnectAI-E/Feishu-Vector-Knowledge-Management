@@ -28,21 +28,27 @@
 
 ## 项目部署
 
-### 导入数据
+### 项目初始化
 
 ```sh
 git clone https://github.com/ConnectAI-E/Feishu-Vector-Knowledge-Management
 cd Feishu-Vector-Knowledge-Management
+```
+
+
+### 导入数据
+```sh
+# 切割qa数据为csv文件 demo:raw.txt
+go run ./cmd - prepare split -f <qaTextFile>
+
+# 导入数据csv(向量)数据
 go run ./cmd - prepare csv -f <csvfile>
 ```
 
 #### CSV 文件表头
-
 ```csv
 id,url,title,text,title_vector,content_vector,vector_id
 ```
-
-
 [样例数据下载](https://cdn.openai.com/API/examples/data/vector_database_wikipedia_articles_embedded.zip)
 
 
