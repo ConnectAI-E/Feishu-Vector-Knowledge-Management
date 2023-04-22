@@ -38,4 +38,4 @@ docker.md
 .DS_Store
 **/.DS_Store
 *.pem
-data.csv
+data/demo/data.csv

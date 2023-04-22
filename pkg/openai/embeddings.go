@@ -31,7 +31,7 @@ type Embedding struct {
 	Index     int       `json:"index"`
 }
 
-// SendEmbeddings returns an EmbeddingResponse
+// Embeddings SendEmbeddings returns an EmbeddingResponse
 func (gpt ChatGPT) Embeddings(input string) (resp *EmbeddingResponse, err error) {
 	requestBody := EmbeddingRequest{
 		Input: input,

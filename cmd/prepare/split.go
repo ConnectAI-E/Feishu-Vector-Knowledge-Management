@@ -81,22 +81,6 @@ var cmdSplit = &cobra.Command{
 
 		fmt.Printf("输入文件 %s 中的文本已分割并写入CSV文件 %s 中。\n", inputFile, outputFile)
 	},
-	RunE:                       nil,
-	PostRun:                    nil,
-	PostRunE:                   nil,
-	PersistentPostRun:          nil,
-	PersistentPostRunE:         nil,
-	FParseErrWhitelist:         cobra.FParseErrWhitelist{},
-	CompletionOptions:          cobra.CompletionOptions{},
-	TraverseChildren:           false,
-	Hidden:                     false,
-	SilenceErrors:              false,
-	SilenceUsage:               false,
-	DisableFlagParsing:         false,
-	DisableAutoGenTag:          false,
-	DisableFlagsInUseLine:      false,
-	DisableSuggestions:         false,
-	SuggestionsMinimumDistance: 0,
 }
 
 // 将文本分隔为问题和答案
