@@ -12,7 +12,7 @@ import (
 )
 
 var cmdCsv = &cobra.Command{
-	Use:   "csv",
+	Use:   "import",
 	Short: "load vector data from csv file",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {

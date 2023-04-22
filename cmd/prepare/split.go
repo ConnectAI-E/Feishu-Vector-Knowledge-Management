@@ -14,25 +14,9 @@ import (
 )
 
 var cmdSplit = &cobra.Command{
-	Use:                    "split",
-	Aliases:                nil,
-	SuggestFor:             nil,
-	Short:                  "split text into question and answer and write to csv file",
-	GroupID:                "",
-	Long:                   "",
-	Example:                "",
-	ValidArgs:              nil,
-	ValidArgsFunction:      nil,
-	Args:                   cobra.MinimumNArgs(1),
-	ArgAliases:             nil,
-	BashCompletionFunction: "",
-	Deprecated:             "",
-	Annotations:            nil,
-	Version:                "",
-	PersistentPreRun:       nil,
-	PersistentPreRunE:      nil,
-	PreRun:                 nil,
-	PreRunE:                nil,
+	Use:   "split",
+	Short: "split text into question and answer and write to csv file",
+	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		// 从命令行参数获取输入文件名
 		inputFile, err := cmd.Flags().GetString("file")

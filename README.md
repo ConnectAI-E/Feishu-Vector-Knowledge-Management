@@ -42,7 +42,7 @@ cd Feishu-Vector-Knowledge-Management
 go run ./cmd - prepare split -f <qaTextFile>
 
 # 导入数据csv(向量)数据
-go run ./cmd - prepare csv -f <csvfile>
+go run ./cmd - prepare import -f <csvfile>
 ```
 
 #### CSV 文件表头
