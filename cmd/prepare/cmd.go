@@ -28,9 +28,14 @@ var cmd = &cobra.Command{
 
 func init() {
 	cmdCsv.Flags().StringP("file", "f", "./data.csv", "csv file path.")
-	cmdSplit.Flags().StringP("file", "f", "./data.txt", "text file path.")
-	cmdAnalyze.Flags().StringP("file", "f", "./data.csv", "csv file path.")
-	cmdAnalyze.Flags().StringP("output", "o", "./out.csv", "outPut csv path.")
+	cmdSplit.Flags().StringP("file", "f", "./demo/raw.txt",
+		"text file path.")
+	cmdSplit.Flags().StringP("output", "o", "./demo/raw.csv",
+		"csv out path.")
+	cmdAnalyze.Flags().StringP("file", "f", "./demo/raw.csv",
+		"csv file path.")
+	cmdAnalyze.Flags().StringP("output", "o", "./demo/out.csv",
+		"outPut csv path.")
 	cmd.AddCommand(cmdCsv)
 	cmd.AddCommand(cmdSplit)
 	cmd.AddCommand(cmdAnalyze)

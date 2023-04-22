@@ -4,6 +4,8 @@ import (
 	"encoding/csv"
 	"fmt"
 	"github.com/spf13/cobra"
+	"lark-vkm/internal/initialization"
+	"lark-vkm/pkg/openai"
 	"log"
 	"os"
 	"strings"
@@ -16,6 +18,10 @@ var cmdAnalyze = &cobra.Command{
 	Short: "analyze vector data from csv file",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
+		cfg, err := cmd.Flags().GetString("config")
+		config := initialization.LoadConfig(cfg)
+		gpt := openai.NewChatGPT(*config)
+
 		inputFile, err := cmd.Flags().GetString("file")
 		if err != nil {
 			panic(err)
@@ -42,26 +48,24 @@ var cmdAnalyze = &cobra.Command{
 		newHeader := addMissingFields(header, "title_vector", "content_vector")
 
 		if len(newHeader) > len(header) {
-			err = updateHeader(f, reader, newHeader)
+			err = updateHeader(reader, newHeader)
 			if err != nil {
 				panic(err)
 			}
 		}
 
-		// 读取temp.csv文件
-		f, err = os.OpenFile(tempFile, os.O_RDWR, 0644)
+		fTemp, err := os.OpenFile(tempFile, os.O_RDWR, 0644)
 		if err != nil {
 			panic(err)
 		}
-		defer closeFile(f)
-		//del temp.csv
+		defer closeFile(fTemp)
 		defer func() {
 			err := os.Remove(tempFile)
 			if err != nil {
 				panic(err)
 			}
 		}()
-		reader = csv.NewReader(f)
+		reader = csv.NewReader(fTemp)
 		reader.FieldsPerRecord = -1
 
 		// 读取所有记录
@@ -82,7 +86,8 @@ var cmdAnalyze = &cobra.Command{
 			copy(record, records[i])
 			// 如果 title_vector 字段为空，调用 OpenAI API 查询
 			if isEmpty(record[titleVectorIndex]) {
-				titleVector, err := getEmbedding(record[titleIndex])
+				titleVector, err := getEmbedding(
+					record[titleIndex], gpt)
 				if err != nil {
 					panic(err)
 				}
@@ -91,7 +96,8 @@ var cmdAnalyze = &cobra.Command{
 
 			// 如果 content_vector 字段为空，调用 OpenAI API 查询
 			if isEmpty(record[contentVectorIndex]) {
-				contentVector, err := getEmbedding(record[contentIndex])
+				contentVector, err := getEmbedding(
+					record[contentIndex], gpt)
 				if err != nil {
 					panic(err)
 				}
@@ -161,25 +167,23 @@ func addMissingFields(header []string, fields ...string) []string {
 			newHeader = append(newHeader, field)
 		}
 	}
-	//fmt.Println("new header:", newHeader)
+	fmt.Println("new header:", newHeader)
 	return newHeader
 }
 
-func updateHeader(f *os.File, reader *csv.Reader, newHeader []string) error {
-	_, err2 := f.Seek(0, 0)
-	if err2 != nil {
-		return err2
-	}
+func updateHeader(reader *csv.Reader, newHeader []string) error {
 	records, err := reader.ReadAll()
 	if err != nil {
 		return err
 	}
-	records[0] = newHeader
+	records = append([][]string{newHeader}, records...)
 	outputFile, err := os.Create(tempFile)
+	defer closeFile(outputFile)
 	if err != nil {
 		return err
 	}
-	defer closeFile(outputFile)
+	//fmt.Println("record:", records)
+	//fmt.Println("outputFile:", tempFile)
 	writer := csv.NewWriter(outputFile)
 	err = writer.WriteAll(records)
 	if err != nil {
@@ -220,7 +224,17 @@ func getFieldIndexes(header []string, fields ...string) (int, int) {
 func isEmpty(s string) bool {
 	return len(strings.TrimSpace(s)) == 0
 }
-func getEmbedding(text string) (string, error) {
-	// TODO: 调用 OpenAI API 查询向量
-	return "placeholder", nil
+func getEmbedding(text string, gpt *openai.ChatGPT) (string,
+	error) {
+	response, err := gpt.Embeddings(text)
+	if err != nil {
+		return "", err
+	}
+	fmt.Println("正在获取向量:" + text)
+	return toString(response.Data[0].Embedding), nil
+	//return "xxx", nil
+}
+
+func toString(vector []float64) string {
+	return fmt.Sprintf("%v", vector)
 }

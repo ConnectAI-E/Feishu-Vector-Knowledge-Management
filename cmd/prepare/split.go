@@ -20,7 +20,7 @@ var cmdSplit = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		// 从命令行参数获取输入文件名
 		inputFile, err := cmd.Flags().GetString("file")
-
+		outputFile, err := cmd.Flags().GetString("output")
 		// 打开输入文件
 		file, err := os.Open(inputFile)
 		if err != nil {
@@ -34,7 +34,6 @@ var cmdSplit = &cobra.Command{
 		}(file)
 
 		// 创建CSV文件
-		outputFile := "output.csv"
 		fileCsv, err := os.Create(outputFile)
 		if err != nil {
 			panic(err)
@@ -50,6 +49,9 @@ var cmdSplit = &cobra.Command{
 		writer := csv.NewWriter(transform.NewWriter(fileCsv,
 			unicode.UTF8BOM.NewEncoder()))
 		defer writer.Flush()
+
+		// 写入表头 title, content
+		err = writer.Write([]string{"title", "content"})
 
 		// 处理输入文件中的每一行文本
 		scanner := bufio.NewScanner(file)
