@@ -1,15 +1,25 @@
 package prepare
 
 import (
+	"fmt"
 	"lark-vkm/internal/initialization"
 	"lark-vkm/pkg/qdrantkit"
 	"log"
 	"os"
+	"strconv"
+	"strings"
 
 	"github.com/gocarina/gocsv"
 	"github.com/google/uuid"
 	"github.com/spf13/cobra"
 )
+
+type Client struct { // Our example struct with a custom type (DateTime)
+	Title         string `csv:"title"`
+	Content       string `csv:"content"`
+	TitleVector   string `csv:"title_vector"`
+	ContentVector string `csv:"content_vector"`
+}
 
 var cmdCsv = &cobra.Command{
 	Use:   "import",
@@ -42,21 +52,25 @@ var cmdCsv = &cobra.Command{
 		}
 
 		count := 0
-		last := 0
 
 		//数据向量化
 		batchSize := 100
 		points := make([]qdrantkit.Point, 0, batchSize)
+		var clients []*Client
+		if err := gocsv.UnmarshalFile(fp,
+			&clients); err != nil { // Load clients from file
+			panic(err)
+		}
 
-		err = gocsv.UnmarshalToCallback(fp, func(row Row) {
+		for _, row := range clients {
+			fmt.Println(row)
+			fmt.Println(row.ContentVector)
 			count++
 			points = append(points, qdrantkit.Point{
 				ID:      uuid.New().String(),
 				Payload: row,
-				Vector:  row.ContentVector,
+				Vector:  stringToFloat64(row.ContentVector),
 			})
-			last = row.Id
-
 			if count%batchSize == 0 {
 				pr := qdrantkit.PointRequest{
 					Points: points,
@@ -70,8 +84,21 @@ var cmdCsv = &cobra.Command{
 				points = make([]qdrantkit.Point, 0, batchSize)
 				return
 			}
-		})
 
-		log.Printf("loaded %d items, last: %d, err: %v", count, last, err)
+		}
+
+		log.Printf("loaded %d items, err: %v", count, err)
 	},
+}
+
+// [2,3,4] -> [2.0, 3.0, 4.0]
+func stringToFloat64(s string) []float64 {
+	s = strings.Trim(s, "[]")
+	s = strings.ReplaceAll(s, " ", "")
+	split := strings.Split(s, ",")
+	result := make([]float64, len(split))
+	for i, v := range split {
+		result[i], _ = strconv.ParseFloat(v, 64)
+	}
+	return result
 }
