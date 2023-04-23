@@ -59,7 +59,7 @@ go run ./cmd - prepare import -f ./data/demo/vector.csv
 ```csv
 id,url,title,content,title_vector,content_vector,vector_id
 ```
-[样例数据下载](https://cdn.openai.com/API/examples/data/vector_database_wikipedia_articles_embedded.zip)
+[样例数据下载](./data/demo/data.csv)
 
 #### Qdrant 接口调试测试
 
