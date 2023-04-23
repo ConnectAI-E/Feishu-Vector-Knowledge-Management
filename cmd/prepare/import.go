@@ -1,7 +1,7 @@
 package prepare
 
 import (
-	"fmt"
+	"github.com/k0kubun/pp/v3"
 	"lark-vkm/internal/initialization"
 	"lark-vkm/pkg/qdrantkit"
 	"log"
@@ -54,7 +54,7 @@ var cmdCsv = &cobra.Command{
 		count := 0
 
 		//数据向量化
-		batchSize := 100
+		batchSize := 3
 		points := make([]qdrantkit.Point, 0, batchSize)
 		var clients []*Client
 		if err := gocsv.UnmarshalFile(fp,
@@ -63,12 +63,17 @@ var cmdCsv = &cobra.Command{
 		}
 
 		for _, row := range clients {
-			fmt.Println(row)
-			fmt.Println(row.ContentVector)
+			pp.Println(clearField(row.Title), clearField(row.Content))
+			//pp.Println(count)
 			count++
+
+			newPayload := map[string]interface{}{
+				"Title":   clearField(row.Title),
+				"Content": clearField(row.Content),
+			}
 			points = append(points, qdrantkit.Point{
 				ID:      uuid.New().String(),
-				Payload: row,
+				Payload: newPayload,
 				Vector:  stringToFloat64(row.ContentVector),
 			})
 			if count%batchSize == 0 {
@@ -82,7 +87,6 @@ var cmdCsv = &cobra.Command{
 					return
 				}
 				points = make([]qdrantkit.Point, 0, batchSize)
-				return
 			}
 
 		}

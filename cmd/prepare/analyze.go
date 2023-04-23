@@ -236,5 +236,6 @@ func getEmbedding(text string, gpt *openai.ChatGPT) (string,
 }
 
 func toString(vector []float64) string {
-	return fmt.Sprintf("%v", vector)
+	//[2,3]
+	return strings.Trim(strings.Replace(fmt.Sprint(vector), " ", ",", -1), "[]")
 }

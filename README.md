@@ -44,10 +44,8 @@ go run ./cmd - prepare split -f ./data/demo/raw.txt -o ./data/demo/raw.csv
 # 将csv文件转换为向量数据(调用openai-embedding-api), raw.csv 必须包含title和content字段
 go run ./cmd - prepare analyze -f ./data/demo/raw.csv -o ./data/demo/vector.csv
 
-//todo: 兼容vector.csv文件
-
 # 导入数据csv(向量)数据
-go run ./cmd - prepare import -f ./data/demo/data.csv
+go run ./cmd - prepare import -f ./data/demo/vector.csv
 ```
 
 #### CSV 文件表头
