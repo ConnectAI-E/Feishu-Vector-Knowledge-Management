@@ -35,11 +35,15 @@ func (a *VkmAction) Execute(info *ActionInfo) bool {
 
 func (a *VkmAction) loadEmbeddings(msg string) []openai.Messages {
 	// 计算向量
-	// TODO: 缓存查询结果
-	response, err := a.info.handler.gpt.Embeddings(msg)
-	if err != nil {
-		log.Println("err:", err)
-		return nil
+	response := a.info.handler.vectorCache.IfProcessed(msg)
+	if response == nil {
+		var err error
+		response, err = a.info.handler.gpt.Embeddings(msg)
+		if err != nil {
+			log.Println("err:", err)
+			return nil
+		}
+		a.info.handler.vectorCache.SetEmbedings(msg, response)
 	}
 
 	params := make(map[string]interface{})
@@ -129,7 +133,7 @@ func sendVkmOperationtInstructionCard(ctx context.Context,
 }
 
 func withVkmOperationtActionBtn(sessionID *string, operations ...string) larkcard.
-	MessageCardElement {
+MessageCardElement {
 	var menuOptions []MenuOption
 
 	for _, operation := range operations {
