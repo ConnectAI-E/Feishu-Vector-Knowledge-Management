@@ -63,12 +63,13 @@ func (a *VkmAction) loadEmbeddings(msg string) []openai.Messages {
 	localData := ""
 	for i, v := range res {
 		re := v.Payload.(map[string]interface{})
+		//pp.Println(re)
 		localData += "\n"
 		localData += strconv.Itoa(i)
 		localData += "."
 		localData += re["Title"].(string)
 		localData += ":"
-		localData += re["Text"].(string)
+		localData += re["Content"].(string)
 	}
 
 	messages := make([]openai.Messages, 0)

@@ -6,6 +6,7 @@ require (
 	github.com/duke-git/lancet/v2 v2.1.18
 	github.com/gin-gonic/gin v1.9.0
 	github.com/google/uuid v1.3.0
+	github.com/k0kubun/pp/v3 v3.2.0
 	github.com/larksuite/oapi-sdk-gin v1.0.0
 	github.com/larksuite/oapi-sdk-go/v3 v3.0.19
 	github.com/mitchellh/mapstructure v1.5.0
@@ -15,6 +16,8 @@ require (
 	github.com/spf13/viper v1.15.0
 	gopkg.in/yaml.v2 v2.4.0
 )
+
+require github.com/mattn/go-colorable v0.1.13 // indirect
 
 require (
 	github.com/bytedance/sonic v1.8.0 // indirect
@@ -48,7 +51,7 @@ require (
 	golang.org/x/exp v0.0.0-20221208152030-732eee02a75a // indirect
 	golang.org/x/net v0.7.0 // indirect
 	golang.org/x/sys v0.5.0 // indirect
-	golang.org/x/text v0.7.0 // indirect
+	golang.org/x/text v0.7.0
 	google.golang.org/protobuf v1.28.1 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
