@@ -26,6 +26,7 @@ func chain(data *ActionInfo, actions ...Action) bool {
 type MessageHandler struct {
 	sessionCache services.SessionServiceCacheInterface
 	msgCache     services.MsgCacheInterface
+	vectorCache  services.VectorCacheInterface
 	gpt          *openai.ChatGPT
 	config       initialization.Config
 }
@@ -114,13 +115,14 @@ func NewMessageHandler(gpt *openai.ChatGPT,
 	return &MessageHandler{
 		sessionCache: services.GetSessionCache(),
 		msgCache:     services.GetMsgCache(),
+		vectorCache:  services.GetVectorCache(),
 		gpt:          gpt,
 		config:       config,
 	}
 }
 
 func (m MessageHandler) judgeIfMentionMe(mention []*larkim.
-	MentionEvent) bool {
+MentionEvent) bool {
 	if len(mention) != 1 {
 		return false
 	}
