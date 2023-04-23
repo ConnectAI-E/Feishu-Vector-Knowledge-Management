@@ -26,6 +26,7 @@
 
 - 🥒 基于 Embeddings + Qdrant 查询上下文
 
+
 ## 项目部署
 
 ### 导入数据
@@ -45,6 +46,11 @@ id,url,title,text,title_vector,content_vector,vector_id
 
 [样例数据下载](https://cdn.openai.com/API/examples/data/vector_database_wikipedia_articles_embedded.zip)
 
+### Qdrant 测试
+
+在线swagger文档：
+
+https://ui.qdrant.tech/#/
 
 #### 部署
 
@@ -67,6 +73,7 @@ docker compose down
 
 事件回调地址: http://IP:9000/webhook/event
 卡片回调地址: http://IP:9000/webhook/card
+
 
 </details>
 
