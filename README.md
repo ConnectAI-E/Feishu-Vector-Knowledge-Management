@@ -1,5 +1,11 @@
+
+
 <p align='center'>
-   Feishu-OpenAI ×（Embeddings + Qdrant）
+    <img src='https://user-images.githubusercontent.com/50035229/233825222-0add62d1-e12f-41ef-86d5-4bf3d0f96d84.png' alt='' width='800'/>
+</p>
+
+<p align='center'>
+   Feishu-OpenAI × 私有知识库
 <br>
 <br>
     🚀 Feishu Vector Knowledge Management 🚀
@@ -14,7 +20,7 @@
 
 🗣 知识库 CSV 导入：支持导入 CSV 格式向量数据
 
-🎭 知识库 CSV 创建：支持重建 CSV 格式向量文件，降低 token 成本 🚧
+🎭 知识库 CSV 创建：支持重建 CSV 格式向量文件，降低 token 成本 
 
 📝 知识库管理：支持导入 URL 网页、文件数据 🚧
 
@@ -40,17 +46,15 @@ go run ./cmd - prepare csv -f <csvfile>
 #### CSV 文件表头
 
 ```csv
-id,url,title,text,title_vector,content_vector,vector_id
+id,url,title,content,title_vector,content_vector,vector_id
 ```
 
 
 [样例数据下载](https://cdn.openai.com/API/examples/data/vector_database_wikipedia_articles_embedded.zip)
 
-### Qdrant 测试
+#### Qdrant 接口调试测试
 
-在线swagger文档：
-
-https://ui.qdrant.tech/#/
+在线swagger文档：https://ui.qdrant.tech/#/
 
 #### 部署
 
