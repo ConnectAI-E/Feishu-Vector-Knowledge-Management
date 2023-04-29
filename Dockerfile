@@ -7,7 +7,7 @@ ENV GO111MODULE=on \
 WORKDIR /build
 ADD . /build
 
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags '-w -s' -o lark-vkm
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags '-w -s' -o ./lark-vkm ./cmd
 
 FROM alpine:latest
 
