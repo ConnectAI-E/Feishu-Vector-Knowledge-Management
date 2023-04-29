@@ -5,7 +5,7 @@ ENV GO111MODULE=on \
     GOPROXY=https://goproxy.cn,direct
 
 WORKDIR /build
-ADD /code /build
+ADD . /build
 
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags '-w -s' -o lark-vkm
 
