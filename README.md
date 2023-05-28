@@ -93,3 +93,8 @@ docker compose down
 ## 更多交流
 
 更多结节请访问项目 [Feishu-OpenAI](https://github.com/ConnectAI-E/Feishu-OpenAI)
+
+## 赞助感谢
+
+友情感谢 'Find My Ai' 提供的部分经费赞助！
+
